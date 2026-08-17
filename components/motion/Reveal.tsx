@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { T, LINE_STAGGER } from "@/lib/motion";
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 
 /**
  * P1 — Cinematic image reveal.
@@ -48,7 +48,7 @@ export function ClipReveal({
         whileInView={{ scale: 1 }}
         viewport={{ once: true, amount }}
         transition={{ ...T.reveal, delay }}
-        className="h-full w-full"
+        className="relative h-full w-full"
       >
         {children}
       </motion.div>
@@ -59,6 +59,9 @@ export function ClipReveal({
 /**
  * P10 — Masked line reveal for headlines.
  * Pass each visual line as a separate string.
+ * In-view detection happens on the (never-clipped) container — observing the
+ * translated line itself would never intersect, since it sits fully inside
+ * its overflow-hidden mask until it animates.
  */
 export function Lines({
   lines,
@@ -74,15 +77,22 @@ export function Lines({
   as?: "h1" | "h2" | "h3" | "p";
 }) {
   const reduced = useReducedMotion();
+  const ref = useRef<HTMLHeadingElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
   return (
-    <Tag className={className}>
+    <Tag ref={ref} className={className}>
       {lines.map((line, i) => (
         <span key={i} className="block overflow-hidden">
           <motion.span
             className={`block ${lineClassName}`}
             initial={reduced ? { opacity: 0 } : { y: "112%" }}
-            whileInView={reduced ? { opacity: 1 } : { y: 0 }}
-            viewport={{ once: true, amount: 0.6 }}
+            animate={
+              inView
+                ? reduced
+                  ? { opacity: 1 }
+                  : { y: 0 }
+                : undefined
+            }
             transition={{ ...T.reveal, delay: delay + i * LINE_STAGGER }}
           >
             {line}

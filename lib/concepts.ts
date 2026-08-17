@@ -20,7 +20,7 @@ export const concepts: ConceptMeta[] = [
     interaction: "Expanding stage panels · raw stack fan-out · transformation wipe",
     model: "Spatial — content blocks physically trade room",
     product: "All ten products, switchable",
-    thumb: "/assets/products/eclipse/s03.jpg",
+    thumb: "/assets/products/eclipse/s07.jpg",
     tone: "dark",
   },
   {

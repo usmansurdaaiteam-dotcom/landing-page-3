@@ -60,6 +60,7 @@ export function Story() {
 
   return (
     <div className="min-h-svh bg-ink pb-28 text-ivory">
+      <div className="mx-auto w-full max-w-[600px]">
       <header className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))]">
         <Wordmark />
         <span className="label-wide text-ivory/40">Concept 03</span>
@@ -230,6 +231,7 @@ export function Story() {
           Daffy Studio — source to story
         </p>
       </footer>
+      </div>
     </div>
   );
 }

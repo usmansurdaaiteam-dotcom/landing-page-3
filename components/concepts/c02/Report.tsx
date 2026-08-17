@@ -63,6 +63,7 @@ export function Report() {
 
   return (
     <div className="min-h-svh bg-ivory pb-28 text-ink">
+      <div className="mx-auto w-full max-w-[600px]">
       <header className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))]">
         <Wordmark tone="light" />
         <span className="label-wide text-ink/40">Concept 02</span>
@@ -291,6 +292,7 @@ export function Report() {
           </p>
         </div>
       </footer>
+      </div>
 
       <Viewer
         still={current}

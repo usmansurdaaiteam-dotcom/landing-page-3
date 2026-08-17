@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 export default function ConceptsIndex() {
   return (
     <main className="min-h-svh bg-ink pb-28 text-ivory">
+      <div className="mx-auto w-full max-w-[640px]">
       <header className="flex items-center justify-between px-5 pt-[max(1.5rem,env(safe-area-inset-top))]">
         <Wordmark />
         <Link href="/compare" className="label text-ivory/50 underline-offset-4 hover:text-brass">
@@ -66,7 +67,8 @@ export default function ConceptsIndex() {
                   priority={i === 0}
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />
-                <span className="label-wide absolute top-4 left-4 text-ivory/75">
+                <span className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-ink/60 to-transparent" />
+                <span className="label-wide absolute top-4 left-4 text-ivory/90">
                   Concept {c.id}
                 </span>
                 <span className="absolute right-4 bottom-4 left-4">
@@ -104,6 +106,7 @@ export default function ConceptsIndex() {
           Daffy Studio — prototype build · real client assets
         </p>
       </footer>
+      </div>
 
       <ConceptSwitcher />
     </main>

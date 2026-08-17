@@ -33,6 +33,7 @@ export function Canvas() {
 
   return (
     <div className="min-h-svh bg-ink pb-28 text-ivory">
+      <div className="mx-auto w-full max-w-[600px]">
       <header className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))]">
         <Wordmark />
         <span className="label-wide text-ivory/40">Concept 01</span>
@@ -141,6 +142,7 @@ export function Canvas() {
           Swipe the rail above — every product carries its own worlds.
         </p>
       </footer>
+      </div>
     </div>
   );
 }

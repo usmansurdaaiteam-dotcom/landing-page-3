@@ -19,6 +19,7 @@ const ROWS: { label: string; key: keyof (typeof concepts)[number] }[] = [
 export default function ComparePage() {
   return (
     <main className="min-h-svh bg-ink pb-28 text-ivory">
+      <div className="mx-auto w-full max-w-[640px]">
       <header className="flex items-center justify-between px-5 pt-[max(1.5rem,env(safe-area-inset-top))]">
         <Wordmark />
         <Link href="/concepts" className="label text-ivory/50 hover:text-brass">
@@ -70,6 +71,7 @@ export default function ComparePage() {
           </Fade>
         ))}
       </section>
+      </div>
 
       <ConceptSwitcher />
     </main>

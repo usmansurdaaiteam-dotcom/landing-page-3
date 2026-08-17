@@ -50,6 +50,7 @@ export function Explorer() {
 
   return (
     <div className="min-h-svh bg-cream pb-28 text-ink">
+      <div className="mx-auto w-full max-w-[600px]">
       <header className="flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))]">
         <Wordmark tone="light" />
         <span className="label-wide text-ink/40">Concept 05</span>
@@ -160,14 +161,14 @@ export function Explorer() {
                         {row.stills.slice(0, 3).map((s) => (
                           <span
                             key={s.id}
-                            className="block h-12 w-9 overflow-hidden rounded-sm opacity-80"
+                            className="block h-14 w-10 overflow-hidden rounded-sm opacity-80"
                           >
                             <Image
                               src={s.src}
                               alt=""
-                              width={36}
-                              height={64}
-                              sizes="36px"
+                              width={40}
+                              height={72}
+                              sizes="40px"
                               className="h-full w-full object-cover"
                             />
                           </span>
@@ -175,13 +176,13 @@ export function Explorer() {
                       </span>
                     )}
                     {!isOpen && row.key === "film" && (
-                      <span className="block h-12 w-9 overflow-hidden rounded-sm opacity-80">
+                      <span className="block h-14 w-10 overflow-hidden rounded-sm opacity-80">
                         <Image
                           src={product.film.poster}
                           alt=""
-                          width={36}
-                          height={64}
-                          sizes="36px"
+                          width={40}
+                          height={72}
+                          sizes="40px"
                           className="h-full w-full object-cover"
                         />
                       </span>
@@ -248,6 +249,7 @@ export function Explorer() {
           </p>
         </div>
       </Fade>
+      </div>
 
       <Viewer
         still={zoom ? zoom.list[zoom.index] : null}

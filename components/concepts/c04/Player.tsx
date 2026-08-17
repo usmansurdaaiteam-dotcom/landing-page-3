@@ -152,7 +152,7 @@ export function Player() {
   const still = chapter.isFilm ? null : chapter.stills[Math.min(slideIdx, chapter.stills.length - 1)];
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-ink text-ivory">
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-ink text-ivory md:inset-x-auto md:left-1/2 md:w-[460px] md:-translate-x-1/2 md:border-x md:border-ivory/10">
       {/* Media stage */}
       <motion.div
         className="absolute inset-0"
@@ -221,7 +221,7 @@ export function Player() {
         {/* Segmented progress */}
         <div className="mt-4 flex gap-1.5">
           {chapters.map((c, i) => (
-            <div key={c.key} className="h-0.5 flex-1 overflow-hidden rounded-full bg-ivory/20">
+            <div key={c.key} className="h-[3px] flex-1 overflow-hidden rounded-full bg-ivory/20">
               {i < chapterIdx ? (
                 <div className="h-full w-full bg-ivory/90" />
               ) : i === chapterIdx ? (

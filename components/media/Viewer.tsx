@@ -92,10 +92,10 @@ export function Viewer({
             <motion.div
               layoutId={layoutId}
               transition={SPRING.spatial}
-              className="relative max-h-full overflow-hidden rounded-sm"
+              className="relative h-[min(74svh,calc(92vw*16/9))] overflow-hidden rounded-sm"
               style={{ aspectRatio: "9 / 16" }}
             >
-              <Still still={still} sizes="92vw" className="max-h-[74svh] w-auto" />
+              <Still still={still} sizes="92vw" />
             </motion.div>
           </motion.div>
 

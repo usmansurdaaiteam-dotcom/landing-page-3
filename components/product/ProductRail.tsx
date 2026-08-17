@@ -64,16 +64,16 @@ export function ProductRail({
             <motion.span
               animate={{ scale: isActive ? 1 : 0.92 }}
               transition={SPRING.snappy}
-              className={`block h-[72px] w-[58px] overflow-hidden rounded-lg ${
+              className={`block h-[80px] w-[64px] overflow-hidden rounded-lg ${
                 isActive ? "" : dim
               }`}
             >
               <Image
                 src={p.film.poster}
                 alt=""
-                width={116}
-                height={144}
-                sizes="58px"
+                width={128}
+                height={160}
+                sizes="64px"
                 className="h-full w-full object-cover"
               />
             </motion.span>

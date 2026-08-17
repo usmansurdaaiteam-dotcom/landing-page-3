@@ -30,10 +30,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${fraunces.variable} ${geist.variable} antialiased`}>
-        {children}
-      </body>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${fraunces.variable} ${geist.variable}`}
+    >
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
