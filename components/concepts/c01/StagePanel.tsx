@@ -6,7 +6,7 @@ import { Still } from "@/components/media/Still";
 import { FilmPlayer } from "@/components/media/FilmPlayer";
 import { SourceFan } from "@/components/concepts/c01/SourceFan";
 import { T, SPRING } from "@/lib/motion";
-import type { Product, Still as StillType } from "@/lib/products";
+import { sortForDisplay, type Product, type Still as StillType } from "@/lib/products";
 
 /** Large active visual + thumb strip; crossfade on thumb tap. */
 function FeatureGallery({ stills, panelKey }: { stills: StillType[]; panelKey: string }) {
@@ -75,8 +75,9 @@ export function StagePanel({
   product: Product;
   cat: "source" | "studio" | "lifestyle" | "campaign" | "film";
 }) {
-  const stills =
+  const filtered =
     cat === "film" ? [] : product.stills.filter((s) => s.cat === cat);
+  const stills = cat === "source" ? filtered : sortForDisplay(filtered);
 
   return (
     <motion.section

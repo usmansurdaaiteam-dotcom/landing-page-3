@@ -11,6 +11,8 @@ export interface Still {
   grade: "A" | "B";
   caption: string;
   blur: string;
+  /** Frame carries a baked BEFORE/AFTER caption from the source film. */
+  label?: boolean;
 }
 
 export interface Film {
@@ -43,6 +45,16 @@ export function getProduct(slug: string): Product {
 
 export function byCat(p: Product, cat: StillCategory, gradeA = false): Still[] {
   return p.stills.filter((s) => s.cat === cat && (!gradeA || s.grade === "A"));
+}
+
+/**
+ * Display order for finished-work galleries: stable sort pushing frames with
+ * baked film captions ("AFTER") behind clean frames, so the first impression
+ * of every gallery is caption-free. Source galleries keep their BEFORE
+ * stamps — there they read as proof.
+ */
+export function sortForDisplay(stills: Still[]): Still[] {
+  return [...stills].sort((a, b) => Number(a.label ?? false) - Number(b.label ?? false));
 }
 
 export function stillById(p: Product, id: string): Still {

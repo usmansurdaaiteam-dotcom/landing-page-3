@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
-import { products, type Still as StillType } from "@/lib/products";
+import { products, sortForDisplay, type Still as StillType } from "@/lib/products";
 import { Still } from "@/components/media/Still";
 import { Viewer } from "@/components/media/Viewer";
 import { FilmPlayer } from "@/components/media/FilmPlayer";
@@ -28,13 +28,14 @@ export function Explorer() {
 
   const rows = useMemo(
     () =>
-      CATS.map((c) => ({
-        ...c,
-        stills:
-          c.key === "film"
-            ? []
-            : product.stills.filter((s) => s.cat === c.key),
-      })).filter((r) => r.key === "film" || r.stills.length > 0),
+      CATS.map((c) => {
+        const filtered =
+          c.key === "film" ? [] : product.stills.filter((s) => s.cat === c.key);
+        return {
+          ...c,
+          stills: c.key === "source" ? filtered : sortForDisplay(filtered),
+        };
+      }).filter((r) => r.key === "film" || r.stills.length > 0),
     [product],
   );
 

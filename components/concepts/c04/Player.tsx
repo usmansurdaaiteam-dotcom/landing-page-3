@@ -10,7 +10,12 @@ import {
   type AnimationPlaybackControls,
 } from "motion/react";
 import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
-import { products, type Product, type Still as StillType } from "@/lib/products";
+import {
+  products,
+  sortForDisplay,
+  type Product,
+  type Still as StillType,
+} from "@/lib/products";
 import { Still } from "@/components/media/Still";
 import { Wordmark } from "@/components/navigation/Wordmark";
 import { T, SPRING } from "@/lib/motion";
@@ -27,9 +32,15 @@ interface Chapter {
 function chaptersFor(p: Product): Chapter[] {
   const chapters: Chapter[] = [];
   const source = p.stills.filter((s) => s.cat === "source");
-  const studio = p.stills.filter((s) => s.cat === "studio" && s.grade === "A");
-  const lifestyle = p.stills.filter((s) => s.cat === "lifestyle" && s.grade === "A");
-  const campaign = p.stills.filter((s) => s.cat === "campaign" && s.grade === "A");
+  const studio = sortForDisplay(
+    p.stills.filter((s) => s.cat === "studio" && s.grade === "A"),
+  );
+  const lifestyle = sortForDisplay(
+    p.stills.filter((s) => s.cat === "lifestyle" && s.grade === "A"),
+  );
+  const campaign = sortForDisplay(
+    p.stills.filter((s) => s.cat === "campaign" && s.grade === "A"),
+  );
   if (source.length) chapters.push({ key: "source", label: "Source", stills: source.slice(0, 4) });
   if (studio.length) chapters.push({ key: "studio", label: "Studio", stills: studio.slice(0, 4) });
   const life = [...lifestyle, ...campaign];

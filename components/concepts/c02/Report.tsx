@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useSpring } from "motion/react";
-import { getProduct, type Still as StillType } from "@/lib/products";
+import { getProduct, sortForDisplay, type Still as StillType } from "@/lib/products";
 import { Still } from "@/components/media/Still";
 import { Viewer } from "@/components/media/Viewer";
 import { FilmPlayer } from "@/components/media/FilmPlayer";
@@ -36,6 +36,9 @@ export function Report() {
     const bySec: Record<string, StillType[]> = {};
     for (const s of product.stills) {
       (bySec[s.cat] ??= []).push(s);
+    }
+    for (const key of Object.keys(bySec)) {
+      if (key !== "source") bySec[key] = sortForDisplay(bySec[key]);
     }
     return bySec;
   }, [product]);
