@@ -60,6 +60,23 @@ scalability for cinema. Accepted.
 5. **Compare page density** — 12.5px body in cells is at the floor; bump
    line-height.
 
+## Round 3 — independent verifier findings and actions
+
+An independent verifier agent re-tested all routes at 390×844 after round 2.
+Actions taken on its findings:
+
+| Finding | Action |
+|---|---|
+| Thumbnails too small across concepts | C04 product drawer rebuilt: 3-col grid with large posters + client labels (was 5-col unlabeled); C01 gallery thumb strip 48→57 px wide; C05 collapsed previews 40→48 px; product rail already enlarged in round 1 |
+| C04 autoplay pacing rushed | Slide duration 3.2 s → 4.2 s |
+| Hold-to-pause had no visible confirmation | "Paused" chip appears beside chapter labels; bottom button already flipped state |
+| "Replay transformation" feedback unclear | Button dims until reveal completes, icon rotates on replay, tap scale response |
+| C02 studio grid cramped / captions low-contrast | Feature rhythm added to studio grid (full-width every 3rd), grid gaps 12→16 px, caption scrim strengthened, editorial pull-quote added between sections |
+| C05 accordion expansion not dramatic enough | Expanded panel now breaks out full-bleed with elevation shadow; deck slides widened to 80vw |
+| C03 chapter rail numerals small | Enlarged (decorative progress rail, intentionally non-interactive) |
+| "JSX parse errors in console" | Artifacts of hot-reload during concurrent editing while the verifier session ran; a clean session across all 7 routes shows zero console errors and zero page errors, and tsc/eslint/production build all pass |
+| "Concepts 01/02/05 are the same layout" | Partially accepted: differentiation strengthened via C05 full-bleed takeover, C02 editorial rhythm + pull-quote. The interaction models themselves remain distinct (expanding canvas + wipe/fan vs. report + shared-element viewer vs. accordion + decks); the verifier reviewed mid-edit states which flattened some of that distinction. |
+
 ## What was deliberately NOT done
 
 - No parallax anywhere: portrait imagery at near-full-bleed doesn't need it.

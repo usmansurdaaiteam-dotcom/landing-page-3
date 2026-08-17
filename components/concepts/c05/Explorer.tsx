@@ -128,8 +128,10 @@ export function Explorer() {
                   key={row.key}
                   layout
                   transition={SPRING.spatial}
-                  className={`overflow-hidden rounded-lg ${
-                    isOpen ? "bg-ink text-ivory" : "hairline border bg-transparent"
+                  className={`overflow-hidden ${
+                    isOpen
+                      ? "-mx-3 rounded-xl bg-ink text-ivory shadow-[0_18px_50px_rgba(20,17,15,0.28)]"
+                      : "hairline rounded-lg border bg-transparent"
                   }`}
                 >
                   <button
@@ -162,14 +164,14 @@ export function Explorer() {
                         {row.stills.slice(0, 3).map((s) => (
                           <span
                             key={s.id}
-                            className="block h-14 w-10 overflow-hidden rounded-sm opacity-80"
+                            className="block h-16 w-12 overflow-hidden rounded-sm opacity-80"
                           >
                             <Image
                               src={s.src}
                               alt=""
-                              width={40}
-                              height={72}
-                              sizes="40px"
+                              width={48}
+                              height={86}
+                              sizes="48px"
                               className="h-full w-full object-cover"
                             />
                           </span>
@@ -177,13 +179,13 @@ export function Explorer() {
                       </span>
                     )}
                     {!isOpen && row.key === "film" && (
-                      <span className="block h-14 w-10 overflow-hidden rounded-sm opacity-80">
+                      <span className="block h-16 w-12 overflow-hidden rounded-sm opacity-80">
                         <Image
                           src={product.film.poster}
                           alt=""
-                          width={40}
-                          height={72}
-                          sizes="40px"
+                          width={48}
+                          height={86}
+                          sizes="48px"
                           className="h-full w-full object-cover"
                         />
                       </span>
@@ -284,7 +286,7 @@ function CategoryDeck({
   return (
     <div className="pb-5">
       <Deck
-        slideWidth="72%"
+        slideWidth="80%"
         onSelect={setActive}
         controls={({ prev, next, index, count }) => (
           <div className="mt-4 px-4">

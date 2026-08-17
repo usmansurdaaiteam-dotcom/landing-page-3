@@ -20,7 +20,7 @@ import { Still } from "@/components/media/Still";
 import { Wordmark } from "@/components/navigation/Wordmark";
 import { T, SPRING } from "@/lib/motion";
 
-const SLIDE_MS = 3200;
+const SLIDE_MS = 4200;
 
 interface Chapter {
   key: string;
@@ -251,7 +251,7 @@ export function Player() {
         </div>
 
         {/* Chapter labels */}
-        <div className="mt-3 flex gap-5">
+        <div className="mt-3 flex items-center gap-5">
           {chapters.map((c, i) => (
             <button
               key={c.key}
@@ -264,6 +264,22 @@ export function Player() {
               {c.label}
             </button>
           ))}
+          <AnimatePresence>
+            {paused && (
+              <motion.span
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={T.fast}
+                className="label ml-auto flex items-center gap-1.5 text-ivory/80"
+              >
+                <svg width="8" height="10" viewBox="0 0 8 10" fill="none" aria-hidden>
+                  <path d="M1 1v8M7 1v8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+                Paused
+              </motion.span>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
@@ -366,28 +382,39 @@ export function Player() {
             >
               <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-ivory/20" />
               <p className="label-wide text-ivory/50">Choose a product</p>
-              <div className="mt-4 grid grid-cols-5 gap-2.5">
+              <div className="no-scrollbar mt-4 grid max-h-[46svh] grid-cols-3 gap-3 overflow-y-auto pb-1">
                 {products.map((p) => (
                   <button
                     key={p.slug}
                     type="button"
                     aria-label={p.name}
                     onClick={() => switchProduct(p.slug)}
-                    className={`relative overflow-hidden rounded-md ${
-                      p.slug === slug ? "ring-1 ring-brass" : "opacity-70"
-                    }`}
+                    className="text-left"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.film.poster}
-                      alt=""
-                      className="aspect-[3/4] w-full object-cover"
-                      loading="lazy"
-                    />
+                    <span
+                      className={`block overflow-hidden rounded-md ${
+                        p.slug === slug ? "ring-1 ring-brass" : "opacity-75"
+                      }`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={p.film.poster}
+                        alt=""
+                        className="aspect-[3/4] w-full object-cover"
+                        loading="lazy"
+                      />
+                    </span>
+                    <span
+                      className={`label mt-1.5 block truncate text-[9px] ${
+                        p.slug === slug ? "text-brass" : "text-ivory/50"
+                      }`}
+                    >
+                      {p.client}
+                    </span>
                   </button>
                 ))}
               </div>
-              <p className="font-display mt-4 text-lg">{product.name}</p>
+              <p className="font-display mt-3 text-lg">{product.name}</p>
               <p className="label mt-1 text-ivory/45">
                 {product.client} · {product.total} assets
               </p>

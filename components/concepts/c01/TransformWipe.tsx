@@ -80,12 +80,19 @@ export function TransformWipe({
         </div>
       </div>
 
-      <button
+      <motion.button
         type="button"
         onClick={replay}
+        whileTap={{ scale: 0.94 }}
+        animate={{ opacity: revealed ? 1 : 0.35 }}
         className="label mt-3 inline-flex items-center gap-2 text-ivory/55 transition-colors hover:text-brass"
       >
-        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
+        <motion.svg
+          key={runId}
+          initial={{ rotate: 0 }}
+          animate={{ rotate: runId > 0 ? -360 : 0 }}
+          transition={T.reveal}
+          width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
           <path
             d="M12.5 7A5.5 5.5 0 1 1 7 1.5c1.9 0 3.5.9 4.6 2.3M11.5 1v3h-3"
             stroke="currentColor"
@@ -93,9 +100,9 @@ export function TransformWipe({
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-        </svg>
+        </motion.svg>
         Replay transformation
-      </button>
+      </motion.button>
     </div>
   );
 }

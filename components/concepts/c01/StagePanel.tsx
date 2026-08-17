@@ -32,7 +32,7 @@ function FeatureGallery({ stills, panelKey }: { stills: StillType[]; panelKey: s
         </div>
       </div>
       {stills.length > 1 && (
-        <div className="no-scrollbar mt-2.5 flex gap-2 overflow-x-auto pb-1">
+        <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
           {stills.map((s, i) => (
             <button
               key={s.id}
@@ -40,9 +40,9 @@ function FeatureGallery({ stills, panelKey }: { stills: StillType[]; panelKey: s
               aria-label={s.caption}
               aria-current={i === active}
               onClick={() => setActive(i)}
-              className="relative h-16 w-12 shrink-0 overflow-hidden rounded-sm"
+              className="relative h-[76px] w-[57px] shrink-0 overflow-hidden rounded-sm"
             >
-              <Still still={s} sizes="48px" className={i === active ? "" : "opacity-45"} />
+              <Still still={s} sizes="57px" className={i === active ? "" : "opacity-45"} />
               {i === active && (
                 <motion.span
                   layoutId={`fg-marker-${panelKey}`}

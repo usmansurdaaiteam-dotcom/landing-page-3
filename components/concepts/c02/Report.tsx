@@ -190,18 +190,35 @@ export function Report() {
           heading="Studio details"
           note={`${groups.studio?.length ?? 0} controlled frames`}
         />
-        <div className="mt-6 grid grid-cols-2 gap-3">
-          {groups.studio?.map((s, i) => (
-            <ClipReveal key={s.id} delay={(i % 2) * 0.07}>
-              <MediaCell
-                still={s}
-                onOpen={() => open(groups.studio, i)}
-                aspect="aspect-[3/4]"
-                sizes="46vw"
-              />
-            </ClipReveal>
-          ))}
+        <div className="mt-6 grid grid-cols-2 gap-4">
+          {groups.studio?.map((s, i) => {
+            const feature = i % 3 === 0;
+            return (
+              <ClipReveal
+                key={s.id}
+                delay={(i % 2) * 0.07}
+                className={feature ? "col-span-2" : ""}
+              >
+                <MediaCell
+                  still={s}
+                  onOpen={() => open(groups.studio, i)}
+                  aspect={feature ? "aspect-[4/5]" : "aspect-[3/4]"}
+                  sizes={feature ? "92vw" : "45vw"}
+                />
+              </ClipReveal>
+            );
+          })}
         </div>
+      </section>
+
+      {/* Pull quote */}
+      <section className="px-5 pt-16">
+        <Fade>
+          <p className="font-display text-[26px] leading-snug text-ink">
+            “The pieces never left the warehouse.
+            <span className="text-brass-2"> The worlds came to them.”</span>
+          </p>
+        </Fade>
       </section>
 
       {/* LIFESTYLE */}
@@ -217,7 +234,7 @@ export function Report() {
           heading="Lifestyle worlds"
           note={`${groups.lifestyle?.length ?? 0} scenes across three pieces`}
         />
-        <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="mt-6 grid grid-cols-2 gap-4">
           {groups.lifestyle?.map((s, i) => {
             const feature = s.grade === "A" && i % 5 === 0;
             return (
@@ -378,7 +395,7 @@ function MediaCell({
         />
       </div>
       {captionTone === "light" && (
-        <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/60 to-transparent px-3 pt-10 pb-2.5">
+        <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent px-3 pt-12 pb-2.5">
           <span className="label text-ivory/85">{still.caption}</span>
         </span>
       )}

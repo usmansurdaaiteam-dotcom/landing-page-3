@@ -151,8 +151,8 @@ export function Story() {
               {CHAPTERS.map((c, i) => (
                 <div key={c.num} className="flex items-center gap-2.5">
                   <span
-                    className={`font-display text-sm tabular-nums transition-colors duration-500 ${
-                      chapter === i ? "text-brass" : "text-ivory/35"
+                    className={`font-display text-base tabular-nums transition-colors duration-500 ${
+                      chapter === i ? "text-brass" : "text-ivory/40"
                     }`}
                   >
                     {c.num}
