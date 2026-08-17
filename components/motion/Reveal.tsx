@@ -1,13 +1,15 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { T, LINE_STAGGER } from "@/lib/motion";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { useRef, type ReactNode } from "react";
 
 /**
  * P1 — Cinematic image reveal.
- * Clip-path rises + child settles from a restrained scale. Opacity-only when
- * reduced motion is requested.
+ * Clip-path rises + child settles from a restrained scale. Under reduced
+ * motion the same states apply instantly (duration 0) — no divergent DOM, so
+ * SSR hydration stays consistent.
  */
 export function ClipReveal({
   children,
@@ -20,26 +22,14 @@ export function ClipReveal({
   delay?: number;
   amount?: number;
 }) {
-  const reduced = useReducedMotion();
-  if (reduced) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount }}
-        transition={{ ...T.reveal, delay }}
-        className={className}
-      >
-        {children}
-      </motion.div>
-    );
-  }
+  const reduced = useReducedMotionSafe();
+  const t = reduced ? { duration: 0 } : { ...T.reveal, delay };
   return (
     <motion.div
       initial={{ clipPath: "inset(14% 4% 14% 4%)", opacity: 0.4 }}
       whileInView={{ clipPath: "inset(0% 0% 0% 0%)", opacity: 1 }}
       viewport={{ once: true, amount }}
-      transition={{ ...T.reveal, delay }}
+      transition={t}
       className={className}
       style={{ willChange: "clip-path" }}
     >
@@ -47,7 +37,7 @@ export function ClipReveal({
         initial={{ scale: 1.08 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true, amount }}
-        transition={{ ...T.reveal, delay }}
+        transition={t}
         className="relative h-full w-full"
       >
         {children}
@@ -76,7 +66,7 @@ export function Lines({
   delay?: number;
   as?: "h1" | "h2" | "h3" | "p";
 }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const ref = useRef<HTMLHeadingElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
   return (
@@ -85,15 +75,13 @@ export function Lines({
         <span key={i} className="block overflow-hidden">
           <motion.span
             className={`block ${lineClassName}`}
-            initial={reduced ? { opacity: 0 } : { y: "112%" }}
-            animate={
-              inView
-                ? reduced
-                  ? { opacity: 1 }
-                  : { y: 0 }
-                : undefined
+            initial={{ y: "112%" }}
+            animate={inView ? { y: 0 } : undefined}
+            transition={
+              reduced
+                ? { duration: 0 }
+                : { ...T.reveal, delay: delay + i * LINE_STAGGER }
             }
-            transition={{ ...T.reveal, delay: delay + i * LINE_STAGGER }}
           >
             {line}
           </motion.span>
@@ -115,13 +103,13 @@ export function Fade({
   delay?: number;
   y?: number;
 }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   return (
     <motion.div
-      initial={{ opacity: 0, y: reduced ? 0 : y }}
+      initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.4 }}
-      transition={{ ...T.reveal, delay }}
+      transition={reduced ? { duration: 0 } : { ...T.reveal, delay }}
       className={className}
     >
       {children}

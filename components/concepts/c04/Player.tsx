@@ -6,9 +6,10 @@ import {
   AnimatePresence,
   useMotionValue,
   animate,
-  useReducedMotion,
+  
   type AnimationPlaybackControls,
 } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { products, type Product, type Still as StillType } from "@/lib/products";
 import { Still } from "@/components/media/Still";
 import { Wordmark } from "@/components/navigation/Wordmark";
@@ -46,7 +47,8 @@ export function Player() {
   const [slideIdx, setSlideIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const reduced = useReducedMotion();
+  const [interacted, setInteracted] = useState(false);
+  const reduced = useReducedMotionSafe();
 
   const chapter = chapters[Math.min(chapterIdx, chapters.length - 1)];
   const fill = useMotionValue(0);
@@ -125,6 +127,7 @@ export function Player() {
 
   const onTap = (e: MouseEvent | TouchEvent | PointerEvent) => {
     clearHold();
+    setInteracted(true);
     if (held.current) {
       setPaused(false);
       return;
@@ -161,6 +164,7 @@ export function Player() {
         onTapCancel={onTapCancel}
         onPanEnd={(_, info) => {
           clearHold();
+          setInteracted(true);
           if (info.offset.x < -70) goTo(chapterIdx + 1);
           else if (info.offset.x > 70) goTo(chapterIdx - 1);
         }}
@@ -310,9 +314,17 @@ export function Player() {
             </button>
           </div>
         </div>
-        <p className="label mt-3 text-center text-[9px] text-ivory/30">
-          Tap sides to step · hold to pause · swipe for chapters
-        </p>
+        <AnimatePresence>
+          {!interacted && (
+            <motion.p
+              exit={{ opacity: 0 }}
+              transition={T.ui}
+              className="label mt-3 text-center text-[9.5px] text-ivory/70 [text-shadow:0_1px_8px_rgba(20,17,15,0.9)]"
+            >
+              Tap sides to step · hold to pause · swipe for chapters
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Product drawer */}

@@ -7,8 +7,9 @@ import {
   useTransform,
   useSpring,
   useMotionValueEvent,
-  useReducedMotion,
+  
 } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { getProduct, stillById } from "@/lib/products";
 import { Still } from "@/components/media/Still";
 import { FilmPlayer } from "@/components/media/FilmPlayer";
@@ -29,7 +30,7 @@ export function Story() {
   const raw = stillById(product, "homecoze-00");
   const studio = stillById(product, "homecoze-13");
   const lifestyle = stillById(product, "homecoze-10");
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
 
   const seqRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -51,8 +52,10 @@ export function Story() {
   const railScale = scrollYProgress;
 
   const [chapter, setChapter] = useState(0);
+  // Boundaries match the transform midpoints (wipe 0.16–0.34, lifestyle
+  // 0.44–0.58, film 0.74–0.86) so the caption never contradicts the visual.
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const next = v < 0.2 ? 0 : v < 0.5 ? 1 : v < 0.78 ? 2 : 3;
+    const next = v < 0.25 ? 0 : v < 0.51 ? 1 : v < 0.8 ? 2 : 3;
     if (next !== chapter) setChapter(next);
   });
 

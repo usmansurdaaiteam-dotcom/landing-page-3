@@ -61,7 +61,7 @@ export default function ComparePage() {
                     <span className="label block text-[9px] text-ivory/35">
                       {r.label}
                     </span>
-                    <span className="block text-[12.5px] leading-snug text-ivory/70">
+                    <span className="block text-[13px] leading-relaxed text-ivory/70">
                       {String(c[r.key])}
                     </span>
                   </span>

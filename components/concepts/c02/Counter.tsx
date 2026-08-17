@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion, animate } from "motion/react";
+import { useInView, animate } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 
 /** Numeric counter that settles once when scrolled into view. */
 export function Counter({
@@ -15,7 +16,7 @@ export function Counter({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.7 });
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {

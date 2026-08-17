@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { T } from "@/lib/motion";
 import type { Film } from "@/lib/products";
 
@@ -27,7 +28,7 @@ export function FilmPlayer({
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
 
   useEffect(() => {
     const el = wrapRef.current;

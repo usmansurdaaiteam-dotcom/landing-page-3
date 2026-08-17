@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { Still } from "@/components/media/Still";
 import { T } from "@/lib/motion";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import type { Still as StillType } from "@/lib/products";
 
 /**
@@ -24,7 +25,7 @@ export function TransformWipe({
   const inView = useInView(ref, { amount: 0.55, once: true });
   const [revealed, setRevealed] = useState(false);
   const [runId, setRunId] = useState(0);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
 
   useEffect(() => {
     if (!inView) return;
@@ -50,37 +51,29 @@ export function TransformWipe({
         <motion.div
           key={runId}
           className="absolute inset-0"
-          initial={
-            reduced ? { opacity: 0 } : { clipPath: "inset(0 0 0 100%)" }
-          }
-          animate={
-            revealed
-              ? reduced
-                ? { opacity: 1 }
-                : { clipPath: "inset(0 0 0 0%)" }
-              : reduced
-                ? { opacity: 0 }
-                : { clipPath: "inset(0 0 0 100%)" }
-          }
-          transition={T.cinema}
-          style={reduced ? undefined : { willChange: "clip-path" }}
+          initial={{ clipPath: "inset(0 0 0 100%)" }}
+          animate={{
+            clipPath: revealed ? "inset(0 0 0 0%)" : "inset(0 0 0 100%)",
+          }}
+          transition={reduced ? { duration: 0 } : T.cinema}
+          style={{ willChange: "clip-path" }}
         >
           <Still still={finished} sizes="92vw" priority />
         </motion.div>
 
-        {/* Stage labels */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-between p-4">
+        {/* Stage labels — diagonal corners so they never crowd each other */}
+        <div className="pointer-events-none absolute inset-0">
           <motion.span
-            animate={{ opacity: revealed ? 0.35 : 0.95 }}
+            animate={{ opacity: revealed ? 0.3 : 1 }}
             transition={T.ui}
-            className="label rounded-full border border-ivory/25 bg-ink/45 px-3 py-1.5 text-ivory backdrop-blur-sm"
+            className="label absolute top-3.5 left-3.5 rounded-full border border-ivory/25 bg-ink/55 px-3 py-1.5 text-ivory backdrop-blur-sm"
           >
             What arrived
           </motion.span>
           <motion.span
-            animate={{ opacity: revealed ? 0.95 : 0.25 }}
+            animate={{ opacity: revealed ? 1 : 0.2 }}
             transition={T.ui}
-            className="label rounded-full border border-brass/50 bg-ink/45 px-3 py-1.5 text-brass backdrop-blur-sm"
+            className="label absolute right-3.5 bottom-3.5 rounded-full border border-brass/50 bg-ink/55 px-3 py-1.5 text-brass backdrop-blur-sm"
           >
             What we built
           </motion.span>

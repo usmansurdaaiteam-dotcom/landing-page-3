@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import { Still } from "@/components/media/Still";
 import { T, SPRING } from "@/lib/motion";
 import type { Still as StillType } from "@/lib/products";
@@ -31,7 +32,7 @@ export function Viewer({
   index?: number;
   count?: number;
 }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
 
   useEffect(() => {
     if (!still) return;

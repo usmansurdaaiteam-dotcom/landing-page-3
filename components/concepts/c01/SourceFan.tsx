@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { Still } from "@/components/media/Still";
 import { SPRING } from "@/lib/motion";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
 import type { Still as StillType } from "@/lib/products";
 
 /**
@@ -14,7 +15,7 @@ import type { Still as StillType } from "@/lib/products";
 export function SourceFan({ stills }: { stills: StillType[] }) {
   const items = stills.slice(0, 3);
   const [fanned, setFanned] = useState(false);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
 
   useEffect(() => {
     const t = setTimeout(() => setFanned(true), reduced ? 0 : 480);
@@ -41,7 +42,11 @@ export function SourceFan({ stills }: { stills: StillType[] }) {
                   ? { rotate: 0, x: "0%", y: 0, scale: 1 }
                   : stacked[i % stacked.length]
               }
-              transition={{ ...SPRING.spatial, delay: fanned ? i * 0.06 : 0 }}
+              transition={
+                reduced
+                  ? { duration: 0 }
+                  : { ...SPRING.spatial, delay: fanned ? i * 0.06 : 0 }
+              }
               style={{ zIndex: items.length - i }}
             >
               <Still still={s} sizes="30vw" />
